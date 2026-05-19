@@ -1,0 +1,104 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+
+  "width": 500,
+  "height": 350,
+
+  "title": {
+    "text": "Mental Disorder Rates by Age Group and Sex",
+    "subtitle": "Reference line at 30% (higher burden threshold)",
+    "fontSize": 16,
+    "subtitleFontSize": 12
+  },
+
+  "data": {
+    "url": "https://raw.githubusercontent.com/yoshanaaariaduray/FIT2179-DV2/refs/heads/main/mental_health_age_sex_disorder.csv"
+  },
+
+  "transform": [
+    {
+      "fold": ["Males", "Females"],
+      "as": ["Sex", "Rate"]
+    }
+  ],
+
+  "layer": [
+
+    {
+      "mark": "bar",
+
+      "encoding": {
+
+        "x": {
+          "field": "Age Group",
+          "type": "nominal",
+          "axis": {"labelAngle": 0},
+          "title": "Age Group"
+        },
+
+        "xOffset": {
+          "field": "Sex"
+        },
+
+        "y": {
+          "field": "Rate",
+          "type": "quantitative",
+          "title": "% with 12-month mental disorder"
+        },
+
+        "color": {
+          "field": "Sex",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Males", "Females"],
+            "range": ["#4A90D9", "#E8738A"]
+          },
+          "legend": {"title": "Sex"}
+        },
+
+        "opacity": {
+          "condition": {
+            "test": "datum.Rate >= 30",
+            "value": 1
+          },
+          "value": 0.55
+        },
+
+        "tooltip": [
+          {"field": "Age Group", "type": "nominal"},
+          {"field": "Sex", "type": "nominal"},
+          {"field": "Rate", "type": "quantitative"}
+        ]
+      }
+    },
+
+    {
+      "mark": {
+        "type": "rule",
+        "color": "black",
+        "strokeWidth": 2
+      },
+
+      "encoding": {
+        "y": {"datum": 30}
+      }
+    },
+
+    {
+      "mark": {
+        "type": "text",
+        "text": "30% threshold",
+        "color": "black",
+        "fontSize": 11,
+        "fontWeight": "bold",
+        "dx": 5,
+        "dy": -5
+      },
+
+      "encoding": {
+        "y": {"datum": 30},
+        "x": {"datum": "16-24"}
+      }
+    }
+  ]
+}

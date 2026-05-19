@@ -1,0 +1,55 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 500,
+  "height": 200,
+  "title": {
+    "text": "Mental Disorder Rates by Sex",
+    "subtitle": "Percentage of Australians with a 12-month mental disorder, 2020-2022",
+    "fontSize": 16,
+    "subtitleFontSize": 12
+  },
+  "data": {
+    "url": "https://raw.githubusercontent.com/yoshanaaariaduray/FIT2179-DV2/refs/heads/main/12-month%20mental%20disorders.csv"
+  },
+  "transform": [
+    {
+      "fold": ["Males", "Females"],
+      "as": ["Sex", "Rate"]
+    },
+    {
+      "calculate": "datum.Sex === 'Males' ? -datum.Rate : datum.Rate",
+      "as": "DivergingRate"
+    }
+  ],
+  "mark": "bar",
+  "encoding": {
+    "y": {
+      "field": "Disorder",
+      "type": "nominal",
+      "title": null,
+      "axis": {"labelAngle": 0}
+    },
+    "x": {
+      "field": "DivergingRate",
+      "type": "quantitative",
+      "title": "Rate (%) - Males (left) | Females (right)",
+      "axis": {
+        "labelExpr": "abs(datum.value)"
+      }
+    },
+    "color": {
+      "field": "Sex",
+      "type": "nominal",
+      "scale": {
+        "domain": ["Males", "Females"],
+        "range": ["#4A90D9", "#E8738A"]
+      },
+      "legend": {"title": "Sex"}
+    },
+    "tooltip": [
+      {"field": "Disorder", "type": "nominal", "title": "Disorder"},
+      {"field": "Sex", "type": "nominal", "title": "Sex"},
+      {"field": "Rate", "type": "quantitative", "title": "Rate (%)"}
+    ]
+  }
+}

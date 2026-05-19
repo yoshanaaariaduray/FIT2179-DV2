@@ -1,0 +1,90 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 600,
+  "height": 300,
+  "title": {
+    "text": "How Confident Are We in Each State's Mental Disorder Rate?",
+    "subtitle": "Dot = estimated rate, Line = confidence interval range, 2020-2022",
+    "fontSize": 16,
+    "subtitleFontSize": 12
+  },
+  "data": {
+    "url": "https://raw.githubusercontent.com/yoshanaaariaduray/FIT2179-DV2/refs/heads/main/12-month%20mental%20disorders%20by%20state_territory%20w%20population.csv"
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "rule",
+        "strokeWidth": 2
+      },
+      "encoding": {
+        "y": {
+          "field": "State",
+          "type": "nominal",
+          "sort": "-x",
+          "title": null
+        },
+        "x": {
+          "field": "Confidence interval (low)",
+          "type": "quantitative",
+          "title": "Disorder Rate (%)",
+          "scale": {"domain": [10, 45]}
+        },
+        "x2": {
+          "field": "Confidence interval (high)"
+        },
+        "color": {
+          "field": "Proportion",
+          "type": "quantitative",
+          "scale": {"scheme": "blues"},
+          "legend": null
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 150
+      },
+      "encoding": {
+        "y": {
+          "field": "State",
+          "type": "nominal",
+          "sort": "-x",
+          "title": null
+        },
+        "x": {
+          "field": "Proportion",
+          "type": "quantitative"
+        },
+        "color": {
+          "field": "Proportion",
+          "type": "quantitative",
+          "scale": {"scheme": "blues"},
+          "legend": {"title": "Rate (%)"}
+        },
+        "tooltip": [
+          {"field": "State", "type": "nominal", "title": "State"},
+          {"field": "Proportion", "type": "quantitative", "title": "Rate (%)"},
+          {"field": "Confidence interval (low)", "type": "quantitative", "title": "Lower bound"},
+          {"field": "Confidence interval (high)", "type": "quantitative", "title": "Upper bound"}
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "dx": 10,
+        "fontSize": 10,
+        "color": "#e63946",
+        "fontWeight": "bold",
+        "text": "Wide range = less reliable data"
+      },
+      "encoding": {
+        "y": {"datum": "Northern Territory"},
+        "x": {"datum": 45}
+      }
+    }
+  ]
+}

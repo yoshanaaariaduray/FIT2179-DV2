@@ -1,0 +1,174 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Mental Disorder Rates and People Affected Across Australia",
+    "subtitle": "Hover over a state on the map to highlight it in the bar chart",
+    "fontSize": 18,
+    "subtitleFontSize": 12
+  },
+  "vconcat": [
+    {
+      "width": 600,
+      "height": 350,
+      "projection": {"type": "mercator"},
+      "layer": [
+        {
+          "data": {
+            "url": "https://raw.githubusercontent.com/rowanhogan/australian-states/master/states.geojson",
+            "format": {"property": "features"}
+          },
+          "transform": [
+            {
+              "lookup": "properties.STATE_NAME",
+              "from": {
+                "data": {
+                  "url": "https://raw.githubusercontent.com/yoshanaaariaduray/FIT2179-DV2/refs/heads/main/12-month%20mental%20disorders%20by%20state_territory%20w%20population.csv"
+                },
+                "key": "State",
+                "fields": ["Proportion", "Population", "Abbreviations", "State"]
+              }
+            }
+          ],
+          "params": [
+            {
+              "name": "state_hover",
+              "select": {
+                "type": "point",
+                "on": "mouseover",
+                "fields": ["State"]
+              }
+            }
+          ],
+          "mark": {
+            "type": "geoshape",
+            "stroke": "white",
+            "strokeWidth": 1
+          },
+          "encoding": {
+            "color": {
+              "field": "Proportion",
+              "type": "quantitative",
+              "scale": {"scheme": "blues"},
+              "legend": {"title": "Disorder Rate (%)"}
+            },
+            "opacity": {
+              "condition": {
+                "param": "state_hover",
+                "value": 1
+              },
+              "value": 0.4
+            },
+            "tooltip": [
+              {"field": "State", "type": "nominal", "title": "State"},
+              {"field": "Proportion", "type": "quantitative", "title": "Rate (%)"},
+              {"field": "Population", "type": "quantitative", "title": "Population", "format": ",.0f"}
+            ]
+          }
+        },
+        {
+          "data": {
+            "url": "https://raw.githubusercontent.com/yoshanaaariaduray/FIT2179-DV2/refs/heads/main/12-month%20mental%20disorders%20by%20state_territory%20w%20population.csv"
+          },
+          "transform": [
+            {
+              "calculate": "datum.Proportion * datum.Population / 100",
+              "as": "People_Affected"
+            },
+            {
+              "lookup": "State",
+              "from": {
+                "data": {
+                  "values": [
+                    {"State": "New South Wales", "Lat": -32.0, "Long": 147.0},
+                    {"State": "Victoria", "Lat": -37.0, "Long": 144.0},
+                    {"State": "Queensland", "Lat": -22.0, "Long": 144.0},
+                    {"State": "South Australia", "Lat": -30.0, "Long": 135.0},
+                    {"State": "Western Australia", "Lat": -25.0, "Long": 121.0},
+                    {"State": "Tasmania", "Lat": -42.0, "Long": 146.5},
+                    {"State": "Northern Territory", "Lat": -19.0, "Long": 133.0},
+                    {"State": "Australian Capital Territory", "Lat": -35.5, "Long": 149.0}
+                  ]
+                },
+                "key": "State",
+                "fields": ["Lat", "Long"]
+              }
+            }
+          ],
+          "mark": {
+            "type": "circle",
+            "opacity": 0.6,
+            "stroke": "white",
+            "strokeWidth": 1,
+            "color": "#e63946"
+          },
+          "encoding": {
+            "longitude": {"field": "Long", "type": "quantitative"},
+            "latitude": {"field": "Lat", "type": "quantitative"},
+            "size": {
+              "field": "People_Affected",
+              "type": "quantitative",
+              "scale": {"range": [100, 3000]},
+              "legend": {"title": "People Affected"}
+            },
+            "tooltip": [
+              {"field": "State", "type": "nominal", "title": "State"},
+              {"field": "Proportion", "type": "quantitative", "title": "Rate (%)"},
+              {"field": "People_Affected", "type": "quantitative", "title": "People Affected", "format": ",.0f"},
+              {"field": "Population", "type": "quantitative", "title": "Population", "format": ",.0f"}
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "width": 600,
+      "height": 250,
+      "title": "Number of People Affected by State",
+      "data": {
+        "url": "https://raw.githubusercontent.com/yoshanaaariaduray/FIT2179-DV2/refs/heads/main/12-month%20mental%20disorders%20by%20state_territory%20w%20population.csv"
+      },
+      "transform": [
+        {
+          "calculate": "datum.Proportion * datum.Population / 100",
+          "as": "People_Affected"
+        }
+      ],
+      "mark": "bar",
+      "encoding": {
+        "y": {
+          "field": "State",
+          "type": "nominal",
+          "sort": "-x",
+          "title": null
+        },
+        "x": {
+          "field": "People_Affected",
+          "type": "quantitative",
+          "title": "Number of People Affected",
+          "axis": {"format": ",.0f"}
+        },
+        "color": {
+          "condition": {
+            "param": "state_hover",
+            "field": "Proportion",
+            "type": "quantitative",
+            "scale": {"scheme": "blues"}
+          },
+          "value": "#cccccc"
+        },
+        "opacity": {
+          "condition": {
+            "param": "state_hover",
+            "value": 1
+          },
+          "value": 0.3
+        },
+        "tooltip": [
+          {"field": "State", "type": "nominal", "title": "State"},
+          {"field": "People_Affected", "type": "quantitative", "title": "People Affected", "format": ",.0f"},
+          {"field": "Proportion", "type": "quantitative", "title": "Rate (%)"}
+        ]
+      }
+    }
+  ]
+}
