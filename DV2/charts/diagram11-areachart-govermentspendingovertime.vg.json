@@ -1,0 +1,76 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 600,
+  "height": 350,
+  "title": {
+    "text": "Government Mental Health Spending Over Time",
+    "subtitle": "Current price government mental health expenditure in millions AUD, 2014-2024",
+    "fontSize": 16,
+    "subtitleFontSize": 12
+  },
+  "data": {
+    "url": "https://raw.githubusercontent.com/yoshanaaariaduray/FIT2179-DV2/refs/heads/main/government_spending_over_time.csv"
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "area",
+        "line": true,
+        "point": true,
+        "color": "#2171b5",
+        "fillOpacity": 0.3
+      },
+      "encoding": {
+        "x": {
+          "field": "Year",
+          "type": "ordinal",
+          "title": "Year",
+          "axis": {"labelAngle": -45}
+        },
+        "y": {
+          "field": "Spending_in_millions",
+          "type": "quantitative",
+          "title": "Spending ($ millions)",
+          "scale": {"domain": [0, 15000]}
+        },
+        "tooltip": [
+          {"field": "Year", "type": "ordinal", "title": "Year"},
+          {"field": "Spending_in_millions", "type": "quantitative", "title": "Spending ($ millions)", "format": ",.0f"}
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "dy": -15,
+        "fontSize": 10,
+        "fontWeight": "bold",
+        "color": "#2171b5"
+      },
+      "encoding": {
+        "x": {"field": "Year", "type": "ordinal"},
+        "y": {"field": "Spending_in_millions", "type": "quantitative"},
+        "text": {
+          "field": "Spending_in_millions",
+          "type": "quantitative",
+          "format": ",.0f"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "text": "Record high $13.8B",
+        "color": "red",
+        "fontSize": 12,
+        "fontWeight": "bold",
+        "dy": -25,
+        "dx": -60
+      },
+      "encoding": {
+        "x": {"datum": "2023-24"},
+        "y": {"datum": 13788}
+      }
+    }
+  ]
+}

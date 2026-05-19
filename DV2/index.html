@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Australia's Silent Crisis</title>
+
+  <!-- Vega-Lite libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+
+  <!-- Your CSS file -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- HERO SECTION -->
+  <div class="hero">
+    <h1>Australia's Silent Crisis</h1>
+    <p class="subtitle">Understanding Mental Health Across the Nation</p>
+    <div class="stats-row">
+      <div class="stat-box">
+        <span class="stat-number">4.3M</span>
+        <span class="stat-label">Australians with a mental disorder</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-number">$13.8B</span>
+        <span class="stat-label">Spent on mental health 2023-24</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-number">45%</span>
+        <span class="stat-label">Ever seek help</span>
+      </div>
+    </div>
+    <p class="intro-text">Mental illness is one of Australia's most pressing health challenges. 
+    Yet despite billions spent on services, millions of Australians suffer in silence. 
+    This visualisation explores who is affected, what they experience, 
+    and whether help is truly reaching those who need it.</p>
+  </div>
+
+  <!-- SECTION 2 WHERE IS IT WORST -->
+<div class="section">
+  <h2>Where in Australia Are People Struggling Most?</h2>
+  <p class="section-intro">Mental health disorders don't affect all Australians equally. 
+  Some states and territories report significantly higher rates than others but the rate alone doesn't tell the full story.</p>
+
+  <div class="chart-container">
+    <div id="diagram1"></div>
+  </div>
+  <p class="chart-caption">The Northern Territory has the highest disorder rate at 28.8% but with only 137,600 people, NSW's lower rate of 19.5% means far more Australians 
+  are actually affected there. Hover over a state to see the details.</p>
+
+  <div class="chart-container">
+    <div id="diagram2"></div>
+  </div>
+  <p class="chart-caption">NT's rate appears alarming but its confidence interval 
+  spans from 15.2% to 42.4%, meaning the true rate could be almost anywhere in that range. 
+  NSW's estimate is far more reliable with a narrow range of 17.9% to 21.0%.</p>
+</div>
+
+  <!-- SECTION 3 WHO IS AFFECTED -->
+  <div class="section">
+    <h2>Who Is Most at Risk?</h2>
+    <p class="section-intro">Mental illness does not discriminate but it does 
+    disproportionately affect certain groups.</p>
+    <div class="chart-container">
+      <div id="diagram3"></div>
+    </div>
+    <p class="chart-caption">Young Australians aged 16-24 have nearly double 
+    the national average rate of 21.5%.</p>
+    <div class="chart-container">
+      <div id="diagram4"></div>
+    </div>
+    <p class="chart-caption">Females experience higher rates across all disorder types 
+    except substance use where males are more than twice as likely to be affected.</p>
+  </div>
+
+  <!-- SECTION 4 WHAT ARE THEY SUFFERING FROM -->
+  <div class="section">
+    <h2>What Are Australians Facing?</h2>
+    <p class="section-intro">Not all mental disorders are the same. Understanding 
+    what Australians are actually experiencing is crucial to understanding the scale 
+    of the crisis.</p>
+    <div class="chart-container">
+      <div id="diagram5"></div>
+    </div>
+    <p class="chart-caption">Anxiety is by far the most common disorder 
+    affecting 1 in 6 Australians aged 16-85.</p>
+    <div class="chart-row">
+      <div class="chart-half">
+        <div id="diagram6"></div>
+        <p class="chart-caption">Social Phobia and PTSD are the most prevalent 
+        anxiety subtypes females consistently experience higher rates.</p>
+      </div>
+      <div class="chart-half">
+        <div id="diagram7"></div>
+        <p class="chart-caption">Young people aged 16-24 dominate anxiety disorders 
+        while substance use peaks in early adulthood.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 5 ARE PEOPLE GETTING HELP -->
+  <div class="section">
+    <h2>Millions Are Suffering in Silence</h2>
+    <p class="section-intro big-statement">Of every 100 Australians with a mental disorder 
+    only 45 sought professional help.</p>
+    <div class="chart-container">
+      <div id="diagram8"></div>
+    </div>
+    <p class="chart-caption">Men are even less likely to seek help
+    only 36 in 100 consulted a health professional.</p>
+    <div class="chart-container">
+      <div id="diagram9"></div>
+    </div>
+    <p class="chart-caption">Medicare mental health visits surged during COVID-19 
+    but have since declined raising questions about whether demand is truly being met.</p>
+    <div class="chart-container">
+      <div id="diagram10"></div>
+    </div>
+    <p class="chart-caption">Mental health services are overwhelmingly concentrated 
+    in major cities leaving rural and remote Australians severely underserved.</p>
+  </div>
+
+  <!-- SECTION 6 THE MONEY QUESTION -->
+  <div class="section">
+    <h2>Are We Spending Enough?</h2>
+    <p class="section-intro">Australia has significantly increased its investment 
+    in mental health over the past decade. But is the money reaching the right places?</p>
+    <div class="chart-container">
+      <div id="diagram11"></div>
+    </div>
+    <p class="chart-caption">Government mental health spending has grown by 70% 
+    over the past decade yet demand continues to outpace supply.</p>
+    <div class="chart-container">
+      <div id="diagram12"></div>
+    </div>
+    <p class="chart-caption">NT receives $128 more per person than NSW 
+    raising serious questions about equity in mental health funding.</p>
+  </div>
+
+  <!-- SECTION 7 CLOSING -->
+  <div class="section closing">
+    <h2>What Needs to Change?</h2>
+    <div class="takeaway-row">
+      <div class="takeaway-box">
+        <h3>Young People</h3>
+        <p>Need more targeted support and early intervention programs</p>
+      </div>
+      <div class="takeaway-box">
+        <h3>Rural Access</h3>
+        <p>Mental health services must expand beyond major cities urgently</p>
+      </div>
+      <div class="takeaway-box">
+        <h3>Men's Health</h3>
+        <p>Men need to be encouraged and supported to seek help</p>
+      </div>
+    </div>
+    <p class="closing-text">Australia's mental health crisis is real, widespread, 
+    and unevenly distributed. While investment is growing, the gap between those 
+    who need help and those who receive it remains alarming particularly for 
+    young people, men, and those living outside major cities.</p>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <h3>Data Sources</h3>
+    <p>Australian Bureau of Statistics National Study of Mental Health and Wellbeing 2020-2022</p>
+    <p>Australian Institute of Health and Welfare Mental Health Services in Australia 2023-24</p>
+    <p>Map geometry: Australian States GeoJSON github.com/rowanhogan/australian-states</p>
+    <p>Headspace centre locations headspace.org.au</p>
+    <br>
+    <p>Visualisation by: [Your Name] | FIT2179 Data Visualisation, Monash University | May 2026</p>
+    <p>AI Acknowledgement: Claude (Anthropic) was used to assist with grammar checking and code suggestions</p>
+  </div>
+
+  <!-- EMBED ALL CHARTS -->
+  <script>
+  vegaEmbed('#diagram1', 'charts/diagram1-choroplethmap-diagram1.vg.json')
+  vegaEmbed('#diagram2', 'charts/diagram2-interval.vg.json')
+  vegaEmbed('#diagram3', 'charts/diagram3-groupbarchart.vg.json')
+  vegaEmbed('#diagram4', 'charts/diagram4-divergingbar.vg.json')
+  vegaEmbed('#diagram5', 'charts/diagram5-wafflechart.vg.json')
+  vegaEmbed('#diagram6', 'charts/diagram6-lollipopchart-anxiety.vg.json')
+  vegaEmbed('#diagram7', 'charts/diagram7-heatmap.vg.json')
+  vegaEmbed('#diagram8', 'charts/diagram8-isotypechart.vg.json')
+  vegaEmbed('#diagram9', 'charts/diagram9-linechart.vg.json')
+  vegaEmbed('#diagram10', 'charts/diagram10-dotmap-locationsaus.vg.json')
+  vegaEmbed('#diagram11', 'charts/diagram11-areachart-govermentspendingovertime.vg.json')
+  vegaEmbed('#diagram12', 'charts/diagram12-chroloplothmap-spendingbystate.vg.json')
+</script>
+
+</body>
+</html>

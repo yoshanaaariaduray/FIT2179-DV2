@@ -1,0 +1,78 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 400,
+  "height": 400,
+  "title": {
+    "text": "What Are Australians Suffering From?",
+    "subtitle": "Each square represents 1% of Australians aged 16-85, 2020-2022",
+    "fontSize": 16,
+    "subtitleFontSize": 12
+  },
+  "data": {
+    "url": "https://raw.githubusercontent.com/yoshanaaariaduray/FIT2179-DV2/refs/heads/main/mental_health_disorder_types.csv"
+  },
+  "transform": [
+    {
+      "window": [{"op": "sum", "field": "Value", "as": "cumulative"}],
+      "frame": [null, 0]
+    },
+    {
+      "calculate": "datum.cumulative - datum.Value",
+      "as": "start"
+    },
+    {
+      "calculate": "sequence(ceil(datum.start), ceil(datum.cumulative))",
+      "as": "squares"
+    },
+    {"flatten": ["squares"]},
+    {
+      "calculate": "datum.squares % 10",
+      "as": "x"
+    },
+    {
+      "calculate": "floor(datum.squares / 10)",
+      "as": "y"
+    }
+  ],
+  "mark": {
+    "type": "rect",
+    "stroke": "white",
+    "strokeWidth": 2,
+    "cornerRadius": 2,
+    "width": 35,
+    "height": 35
+  },
+  "encoding": {
+    "x": {
+      "field": "x",
+      "type": "ordinal",
+      "axis": null,
+      "scale": {"paddingInner": 0.1}
+    },
+    "y": {
+      "field": "y",
+      "type": "ordinal",
+      "axis": null,
+      "sort": "ascending",
+      "scale": {"paddingInner": 0.1}
+    },
+    "color": {
+      "field": "Disorder",
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          "Any Anxiety disorders",
+          "Any Affective disorders",
+          "Any Substance Use disorders",
+          "No disorder"
+        ],
+        "range": ["#2171b5", "#6baed6", "#bdd7e7", "#eeeeee"]
+      },
+      "legend": {"title": "Disorder Type"}
+    },
+    "tooltip": [
+      {"field": "Disorder", "type": "nominal", "title": "Disorder"},
+      {"field": "Value", "type": "quantitative", "title": "% of Australians"}
+    ]
+  }
+}

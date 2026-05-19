@@ -1,0 +1,74 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 400,
+  "height": 400,
+  "title": {
+    "text": "Out of Every 100 Australians With a Mental Disorder...",
+    "subtitle": "Only 45 sought professional help, 2020-2022",
+    "fontSize": 16,
+    "subtitleFontSize": 12
+  },
+  "data": {
+    "url": "https://raw.githubusercontent.com/yoshanaaariaduray/FIT2179-DV2/refs/heads/main/consultation_help_isotypechart.csv"
+  },
+  "transform": [
+    {
+      "window": [{"op": "sum", "field": "Proportions", "as": "cumulative"}],
+      "frame": [null, 0]
+    },
+    {
+      "calculate": "datum.cumulative - datum.Proportions",
+      "as": "start"
+    },
+    {
+      "calculate": "sequence(ceil(datum.start), ceil(datum.cumulative))",
+      "as": "squares"
+    },
+    {"flatten": ["squares"]},
+    {
+      "calculate": "datum.squares % 10",
+      "as": "x"
+    },
+    {
+      "calculate": "floor(datum.squares / 10)",
+      "as": "y"
+    }
+  ],
+  "mark": {
+    "type": "point",
+    "filled": true,
+    "size": 300,
+    "shape": "M 0 -1 m -0.3 0 a 0.3 0.3 0 1 0 0.6 0 a 0.3 0.3 0 1 0 -0.6 0 M -0.5 -0.3 Q -0.6 0.2 -0.4 0.5 L -0.2 0.5 L -0.2 1 L 0.2 1 L 0.2 0.5 L 0.4 0.5 Q 0.6 0.2 0.5 -0.3 Z"
+  },
+  "encoding": {
+    "x": {
+      "field": "x",
+      "type": "ordinal",
+      "axis": null,
+      "scale": {"paddingInner": 0.1}
+    },
+    "y": {
+      "field": "y",
+      "type": "ordinal",
+      "axis": null,
+      "sort": "descending",
+      "scale": {"paddingInner": 0.1}
+    },
+    "color": {
+      "field": "Consultation",
+      "type": "nominal",
+      "scale": {
+        "domain": ["Got help", "Did not get help"],
+        "range": ["#2171b5", "#cccccc"]
+      },
+      "legend": {
+        "title": null,
+        "orient": "bottom"
+      }
+    },
+    "tooltip": [
+      {"field": "Consultation", "type": "nominal", "title": "Status"},
+      {"field": "Proportions", "type": "quantitative", "title": "% of people"}
+    ]
+  }
+}

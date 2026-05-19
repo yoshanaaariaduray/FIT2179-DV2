@@ -1,0 +1,105 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+
+  "width": 600,
+  "height": 350,
+
+  "title": {
+    "text": "Medicare Mental Health Services Over Time",
+    "subtitle": "Rate of Medicare-subsidised mental health services per 1,000 population, 2014-2024",
+    "fontSize": 16,
+    "subtitleFontSize": 12
+  },
+
+  "data": {
+    "url": "https://raw.githubusercontent.com/yoshanaaariaduray/FIT2179-DV2/refs/heads/main/medicare_mental_health%20-%20diagram_9.csv"
+  },
+
+  "layer": [
+
+    {
+      "params": [
+        {
+          "name": "brush",
+          "select": {
+            "type": "interval",
+            "encodings": ["x"]
+          }
+        }
+      ],
+
+      "mark": {
+        "type": "line",
+        "point": true,
+        "strokeWidth": 3,
+        "color": "#2171b5"
+      },
+
+      "encoding": {
+        "x": {
+          "field": "Year",
+          "type": "ordinal",
+          "axis": {"labelAngle": -45},
+          "title": "Year"
+        },
+
+        "y": {
+          "field": "Rate_per_1000",
+          "type": "quantitative",
+          "title": "Services per 1,000 population",
+          "scale": {"domain": [380, 570]}
+        },
+
+        "opacity": {
+          "condition": {
+            "param": "brush",
+            "value": 1
+          },
+          "value": 0.6
+        },
+
+        "tooltip": [
+          {"field": "Year", "type": "ordinal"},
+          {"field": "Rate_per_1000", "type": "quantitative"}
+        ]
+      }
+    },
+
+    {
+      "transform": [
+        {
+          "filter": {"param": "brush"}
+        }
+      ],
+
+      "mark": {
+        "type": "rule",
+        "color": "firebrick",
+        "size": 3
+      },
+
+      "encoding": {
+        "y": {
+          "aggregate": "mean",
+          "field": "Rate_per_1000"
+        }
+      }
+    },
+
+    {
+      "mark": {
+        "type": "text",
+        "text": "COVID-19 spike",
+        "color": "red",
+        "fontSize": 12,
+        "fontWeight": "bold",
+        "dy": -25,
+        "dx": 10
+      },
+      "encoding": {
+        "x": {"datum": "2020-21"},
+        "y": {"datum": 546}
+      }
+    }
+  ]
+}
